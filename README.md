@@ -11,7 +11,7 @@ Table of Contents
 - [Waypoints CRUD](#waypoints-crud)
 - [Table of Contents](#table-of-contents)
   - [Quickstart](#quickstart)
-  - [(Local) dev requirements](#local-dev-requirements)
+  - [Dev and Build requirements](#dev-and-build-requirements)
   - [Development](#development)
     - [Local dev setup](#local-dev-setup)
     - [Local dev](#local-dev)
@@ -24,7 +24,7 @@ Table of Contents
 - Enter a waypoint as a comma separated string and click save
 - See it pop up in the table below!
 
-## (Local) dev requirements
+## Dev and Build requirements
 - python >=3.8
 - docker-compose >= 1.27.0 (needs compose specification)
 - node >= 10.19
