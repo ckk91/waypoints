@@ -1,9 +1,9 @@
 <template>
   <div id="app">
+    <b-navbar type="light" variant="light" class="mb-3">
+      <b-navbar-brand> Waypoint Full Stack Demo W/ Pagination </b-navbar-brand>
+    </b-navbar>
     <b-container>
-      <b-row>
-        <b-jumbotron header="Waypoint Full Stack Demo"></b-jumbotron>
-      </b-row>
       <b-form-row>
         <b-col>
           <waypoint-form />
@@ -11,7 +11,7 @@
       </b-form-row>
       <b-row>
         <b-col>
-        <waypoint-list />
+          <waypoint-list />
         </b-col>
       </b-row>
     </b-container>
