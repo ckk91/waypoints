@@ -26,7 +26,7 @@ Table of Contents
 
 ## (Local) dev requirements
 - python >=3.8
-- docker-(compose)
+- docker-compose >= 1.27.0 (needs compose specification)
 - node >= 10.19
 - vue-cli https://cli.vuejs.org/
 - poetry https://python-poetry.org/
