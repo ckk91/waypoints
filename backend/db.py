@@ -3,11 +3,12 @@ db connector and model
 """
 
 import sqlalchemy
-from sqlalchemy import Column, Float, Integer, create_engine
+from sqlalchemy import Column, Float, Integer
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.session import Session
+from sqlalchemy.pool import NullPool
 
 from .config import CONFIG
 
@@ -32,7 +33,12 @@ class WaypointModel(Base):
         return await db.run_sync(lambda session: session.query(WaypointModel).count())
 
     @staticmethod
-    async def get_paged(db: Session, offset: int = 0, limit: int = 10):  # generator
+    async def get_paged(db: Session, offset: int = 0, limit: int = 10):
+        limit = (
+            limit
+            if limit <= CONFIG.get("MAX_PAGINATION")
+            else CONFIG.get("MAX_PAGINATION")
+        )
         return await db.run_sync(
             lambda session: session.query(WaypointModel)
             .offset(offset)
@@ -42,8 +48,10 @@ class WaypointModel(Base):
 
 
 engine = create_async_engine(
-    f"postgresql+asyncpg://postgres:example@{CONFIG.get('DB_HOST')}"
+    f"postgresql+asyncpg://postgres:example@{CONFIG.get('DB_HOST')}",
+    poolclass=NullPool,  # to work around mutlithreaded async issues
 )
+
 Session_ = sqlalchemy.orm.sessionmaker(
     bind=engine, class_=AsyncSession, expire_on_commit=False
 )

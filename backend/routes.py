@@ -26,14 +26,12 @@ async def get_app_index(request: Request):
 
 
 # === create, read, as per requirements ===
-@router.get(
-    "/waypoints/", response_model=PagedWaypoints
-)  # todo mitigation strat for large responses
+@router.get("/waypoints/", response_model=PagedWaypoints)
 async def read_paged_waypoints(offset=0, limit=10, db: Session = Depends(get_session)):
     return PagedWaypoints(
         values=await WaypointModel.get_paged(db, offset=offset, limit=limit),
         total=await WaypointModel.get_table_size(db),
-    )  # XXX kinda expensiv, but good enough for now
+    )  # XXX kinda expensive, but good enough for now
 
 
 @router.post("/waypoints/", response_model=Waypoint, status_code=201)

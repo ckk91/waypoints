@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "be"
+name = "backend"
 version = "0.1.0"
 description = "Solution to the Planet Waypoint Take-Home Challenge"
 authors = ["Christoph Koch <hello@chris-k.at>"]

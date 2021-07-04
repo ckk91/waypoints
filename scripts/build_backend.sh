@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-mkdir -p be/static/{css,js}
-mkdir -p be/templates
-mv fe/dist/index.html be/templates
-mv fe/dist/favicon.ico be/templates
-mv fe/dist/css/* be/static/css
-mv fe/dist/js/* be/static/js
+mkdir -p backend/static/{css,js}
+mkdir -p backend/templates
+mv frontend/dist/index.html backend/templates
+mv frontend/dist/favicon.ico backend/templates
+mv frontend/dist/css/* backend/static/css
+mv frontend/dist/js/* backend/static/js
 poetry build  # output is in dist

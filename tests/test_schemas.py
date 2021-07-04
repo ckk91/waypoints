@@ -2,7 +2,7 @@ import asyncio
 
 import pytest
 
-from be.schemas import NotAValidCoordinateError, parse_input
+from backend.schemas import NotAValidCoordinateError, parse_input
 
 
 def test_input_parsing():

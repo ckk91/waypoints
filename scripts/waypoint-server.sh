@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
-
-gunicorn -w 4 -k uvicorn.workers.UvicornWorker be.app:app --bind 0.0.0.0:8000
+# PORT var for GCP/Heroku
+gunicorn -w "${BE_WORKERS:-1}" -k uvicorn.workers.UvicornWorker backend.app:app --bind :"${PORT:-8000}"

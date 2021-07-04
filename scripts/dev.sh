@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-pushd fe
+pushd frontend
 npm run serve &
 popd
-#pushd be
-uvicorn be.app:app --reload
+
+# uvicorn for local development
+uvicorn backend.app:app --reload

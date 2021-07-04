@@ -38,5 +38,3 @@ def build_app(app: FastAPI):
 
 
 app = build_app(FastAPI())
-
-
