@@ -49,7 +49,6 @@ class WaypointModel(Base):
 
 engine = create_async_engine(
     f"postgresql+asyncpg://postgres:example@{CONFIG.get('DB_HOST')}",
-    poolclass=NullPool,  # to work around mutlithreaded async issues
 )
 
 Session_ = sqlalchemy.orm.sessionmaker(
