@@ -46,5 +46,7 @@ Table of Contents
 - `make load-test` for simple backend load-testing facilities provided by locust.
 
 ## TODO
+- [ ] Cleanup idosyncratic rest call
+- [ ] Throw error instead of silencing invalid pagination recess
 - [ ] Configure for GCP Cloud run
 - [ ] fix dev env race condition
