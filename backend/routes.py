@@ -27,7 +27,10 @@ async def get_app_index(request: Request):
 
 # === create, read, as per requirements ===
 @router.get("/waypoints/", response_model=PagedWaypoints)
-async def read_paged_waypoints(offset=0, limit=10, db: Session = Depends(get_session)):
+async def read_paged_waypoints(offset=0, limit:int=10, db: Session = Depends(get_session)):
+    if limit > CONFIG.get("MAX_PAGINATION"):
+        raise HTTPException(status_code=422, detail="Limit too large.")
+
     return PagedWaypoints(
         values=await WaypointModel.get_paged(db, offset=offset, limit=limit),
         total=await WaypointModel.get_table_size(db),
@@ -39,6 +42,6 @@ async def create_waypoint(waypoint: WaypointString, db: Session = Depends(get_se
     try:
         (lat, lon) = await parse_input(waypoint.waypoint)
     except NotAValidCoordinateError:
-        raise HTTPException(status_code=422)
+        raise HTTPException(status_code=422, detail="Invalid coordinates")
 
     return await WaypointModel.create_waypoint(db, long=lon, lat=lat)

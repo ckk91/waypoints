@@ -34,11 +34,6 @@ class WaypointModel(Base):
 
     @staticmethod
     async def get_paged(db: Session, offset: int = 0, limit: int = 10):
-        limit = (
-            limit
-            if limit <= CONFIG.get("MAX_PAGINATION")
-            else CONFIG.get("MAX_PAGINATION")
-        )
         return await db.run_sync(
             lambda session: session.query(WaypointModel)
             .offset(offset)

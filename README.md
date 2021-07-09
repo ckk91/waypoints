@@ -47,6 +47,6 @@ Table of Contents
 
 ## TODO
 - [ ] Cleanup idosyncratic rest call
-- [ ] Throw error instead of silencing invalid pagination recess
+- [x] Throw error instead of silencing invalid pagination size
 - [ ] Configure for GCP Cloud run
 - [ ] fix dev env race condition
