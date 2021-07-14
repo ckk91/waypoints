@@ -10,6 +10,6 @@ export function getWaypointPage(currentPage, limit) {
           })
 }
 
-export function createWaypoint(waypoint) {
-    return axios.post("http://localhost:8000/waypoints", {waypoint});
+export function createWaypoint(latitude, longitude) {
+    return axios.post("http://localhost:8000/waypoints", { latitude , longitude });
 }

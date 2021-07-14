@@ -1,35 +1,26 @@
 """
 Pydantic Schemas for REST API
 """
-import re
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
-from pydantic import BaseModel
-from pydantic.types import constr  # todo add to decisions.md
-
-RE_WAYPOINT = r"^(-?\d+\.\d+),? +(-?\d+\.\d+)$"
-RE_WAYPOINT_COMPILED = re.compile(RE_WAYPOINT)
-
-
-class NotAValidCoordinateError(BaseException):
-    pass
-
-
-async def parse_input(raw_wp: str) -> Tuple[float, float]:
-    (lat, lon) = RE_WAYPOINT_COMPILED.findall(raw_wp)[0]
-    lat, lon = float(lat), float(lon)
-    if -85.0 <= lat <= 85.05115 and -180.0 <= lon <= 180.0:
-        return (lat, lon)
-    raise NotAValidCoordinateError()
-
-
-class WaypointString(BaseModel):
-    waypoint: constr(regex=RE_WAYPOINT)
+from pydantic import BaseModel, validator
 
 
 class WaypointBase(BaseModel):
     longitude: float
     latitude: float
+
+    @validator("latitude")
+    def lat_range_validator(cls, lat):
+        if -85.0 <= lat <= 85.05115:
+            return lat
+        raise ValueError("Latitude out of bounds.")
+
+    @validator("longitude")
+    def lon_range_validator(cls, lon):
+        if -180.0 <= lon <= 180.0:
+            return lon
+        raise ValueError("Longitude out of bounds.")
 
 
 class Waypoint(WaypointBase):

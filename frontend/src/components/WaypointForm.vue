@@ -25,6 +25,7 @@
 </template>
 <script>
 import { getWaypointPage, createWaypoint } from "../scripts/api.js";
+import { parseWaypoint } from "../scripts/util.js";
 export default {
   name: "WaypointForm",
   data() {
@@ -41,8 +42,10 @@ export default {
   methods: {
     onSubmit(e) {
       e.preventDefault();
+    
+      const { lat, lon } = parseWaypoint(this.form.waypoint);
 
-      createWaypoint(this.form.waypoint)
+      createWaypoint(lat, lon)
         .then((res) => {
           if (res.status == 201) {
             this.successAlert = true;

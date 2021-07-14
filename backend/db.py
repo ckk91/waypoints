@@ -8,7 +8,6 @@ from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio.session import AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm.session import Session
-from sqlalchemy.pool import NullPool
 
 from .config import CONFIG
 

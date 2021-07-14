@@ -8,11 +8,9 @@ from starlette.responses import HTMLResponse
 from .config import CONFIG
 from .db import WaypointModel, get_session
 from .schemas import (
-    NotAValidCoordinateError,
     PagedWaypoints,
     Waypoint,
-    WaypointString,
-    parse_input,
+    WaypointBase,
 )
 
 router = APIRouter()
@@ -27,7 +25,9 @@ async def get_app_index(request: Request):
 
 # === create, read, as per requirements ===
 @router.get("/waypoints/", response_model=PagedWaypoints)
-async def read_paged_waypoints(offset=0, limit:int=10, db: Session = Depends(get_session)):
+async def read_paged_waypoints(
+    offset=0, limit: int = 10, db: Session = Depends(get_session)
+):
     if limit > CONFIG.get("MAX_PAGINATION"):
         raise HTTPException(status_code=422, detail="Limit too large.")
 
@@ -38,10 +38,7 @@ async def read_paged_waypoints(offset=0, limit:int=10, db: Session = Depends(get
 
 
 @router.post("/waypoints/", response_model=Waypoint, status_code=201)
-async def create_waypoint(waypoint: WaypointString, db: Session = Depends(get_session)):
-    try:
-        (lat, lon) = await parse_input(waypoint.waypoint)
-    except NotAValidCoordinateError:
-        raise HTTPException(status_code=422, detail="Invalid coordinates")
-
-    return await WaypointModel.create_waypoint(db, long=lon, lat=lat)
+async def create_waypoint(waypoint: WaypointBase, db: Session = Depends(get_session)):
+    return await WaypointModel.create_waypoint(
+        db, long=waypoint.longitude, lat=waypoint.latitude
+    )

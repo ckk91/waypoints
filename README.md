@@ -46,7 +46,10 @@ Table of Contents
 - `make load-test` for simple backend load-testing facilities provided by locust.
 
 ## TODO
-- [ ] Cleanup idosyncratic rest call
-- [x] Throw error instead of silencing invalid pagination size
+- [x] Cleanup idosyncratic rest post for waypoint creation
+  - [x] parse waypoint string on frontend
+  - [x] make string parsing more robust
+- [x] Backend: Throw error instead of silencing invalid pagination size
+- [ ] ? Use pagination package instead of hand-rolling
 - [ ] Configure for GCP Cloud run
 - [ ] fix dev env race condition
