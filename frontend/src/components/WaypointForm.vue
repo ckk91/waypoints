@@ -40,10 +40,21 @@ export default {
     };
   },
   methods: {
+    waypointError() {
+      this.errorAlert = true;
+      this.errMsg =
+        "Latitude must be between -85.0 and 85.05115; Longitude between -180.0 and 180.0";
+    },
     onSubmit(e) {
       e.preventDefault();
-    
-      const { lat, lon } = parseWaypoint(this.form.waypoint);
+
+      const res = parseWaypoint(this.form.waypoint);
+      if (res === null) {
+        this.waypointError();
+        return;
+      }
+
+      const { lat, lon } = res;
 
       createWaypoint(lat, lon)
         .then((res) => {
@@ -62,9 +73,7 @@ export default {
         })
         .catch((err) => {
           if (err.response.status == 422) {
-            this.errorAlert = true;
-            this.errMsg =
-              "Latitude must be between -85.0 and 85.05115; Longitude between -180.0 and 180.0";
+            this.waypointError();
           } else {
             this.errorAlert = true;
             this.errMsg = err.message;
